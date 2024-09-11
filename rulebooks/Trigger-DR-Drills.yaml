@@ -11,7 +11,7 @@
     - name: R1 - Heard "site-up!"
       condition: event.payload.message == "site-up!"
       action:
-        run_job_template:
+        run_workflow_job_template:
           name: DR-Drills
           organization: Default
 
