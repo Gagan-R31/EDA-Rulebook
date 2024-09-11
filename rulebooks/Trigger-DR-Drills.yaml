@@ -12,7 +12,7 @@
       condition: event.payload.message == "site-up!"
       action:
         run_job_template:
-          name: Primary-server-frontend-backup
+          name: DR-Drills
           organization: Default
 
     - name: R2 - Didn't hear "site-up!"
