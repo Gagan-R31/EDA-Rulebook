@@ -1,0 +1,12 @@
+rulebook:
+  name: "API Trigger for DR-Drills"
+  description: "Triggers the DR-Drills workflow when any API call is received"
+
+  rules:
+    - name: "Trigger DR-Drills on API Call"
+      event:
+        source: "API"  # API call event source
+        method: "POST"  # Trigger on POST requests
+      actions:
+        - name: "Trigger DR-Drills Workflow"
+          workflow: "DR-Drills"
