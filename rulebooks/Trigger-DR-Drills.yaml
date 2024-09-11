@@ -1,25 +1,16 @@
 ---
-- name: Trigger DR-Drills on Webhook POST
-  hosts: all
+- name: Listen for API Calls and Trigger DR-Drills
+  hosts: localhost
   sources:
-    - ansible.eda.webhook:
+    - ansible.eda.http:
         host: 0.0.0.0
         port: 5000
-
+        endpoint: /trigger
+        method: POST
   rules:
-    - name: R1 - Trigger DR-Drills on "start-drill"
-      condition: event.payload.action == "start-drill"
+    - name: Trigger DR-Drills Workflow
+      condition: event.data is defined
       action:
-        - name: "Trigger DR-Drills Workflow"
-          ansible.builtin.debug:
-            msg: "Received '{{ event.payload.action }}', triggering DR-Drills workflow."
-        - name: "Start DR-Drills Workflow"
-          ansible.builtin.shell:
-            cmd: "curl -X POST https://your-aap.com/api/v1/workflows/dr-drills/trigger"
-
-    - name: R2 - Unrecognized action
-      condition: event.payload.action is defined and event.payload.action != "start-drill"
-      action:
-        - name: "Log Invalid Action"
-          ansible.builtin.debug:
-            msg: "Received unknown action '{{ event.payload.action }}'. No workflow triggered."
+        run_job_template:
+          name: Primary-server-frontend-backup
+          organization: Default
