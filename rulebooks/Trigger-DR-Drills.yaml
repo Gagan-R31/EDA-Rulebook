@@ -8,15 +8,15 @@
         endpoint: /trigger
         method: POST
   rules:
-    - name: R1 - Heard "Hello!"
-      condition: event.payload.message == "Hello!"
+    - name: R1 - Heard "site-up!"
+      condition: event.payload.message == "site-up!"
       action:
         run_job_template:
           name: Primary-server-frontend-backup
           organization: Default
 
-    - name: R2 - Didn't hear "Hello!"
-      condition: event.payload.message is defined and event.payload.message != "Hello!"
+    - name: R2 - Didn't hear "site-up!"
+      condition: event.payload.message is defined and event.payload.message != "site-up!"
       action:
         run_job_template:
           name: Primary-server-frontend-backup
