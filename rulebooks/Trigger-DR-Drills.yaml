@@ -8,8 +8,8 @@
         endpoint: /trigger
         method: POST
   rules:
-    - name: Trigger DR-Drills Workflow
-      condition: event.data is defined
+    - name: Trigger DR-Drills on Site Status (Up or Down)
+      condition: event.data.site_status in ["up", "down"]
       action:
         run_job_template:
           name: Primary-server-frontend-backup
