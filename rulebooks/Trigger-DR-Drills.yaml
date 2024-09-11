@@ -1,10 +1,10 @@
 ---
 - name: Listen for API Calls and Trigger DR-Drills
-  hosts: localhost
+  hosts: all
   sources:
     - ansible.eda.webhook:
-        host: 0.0.0.0
-        port: 5000
+        host: 143.244.142.40
+        port: 80  # Default HTTP port if no specific port is provided
         endpoint: /trigger
         method: POST
   rules:
