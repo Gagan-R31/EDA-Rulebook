@@ -4,7 +4,6 @@
   sources:
     - ansible.eda.webhook:
         host: 143.244.142.40
-        port: 80  # Default HTTP port if no specific port is provided
         endpoint: /trigger
         method: POST
   rules:
