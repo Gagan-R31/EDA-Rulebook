@@ -4,6 +4,7 @@
   sources:
     - ansible.eda.webhook:
         host: 143.244.142.40
+        port: 5000
         endpoint: /trigger
         method: POST
   rules:
