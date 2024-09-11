@@ -11,11 +11,13 @@
     - name: R1 - Heard "Hello!"
       condition: event.payload.message == "Hello!"
       action:
-        debug:
-          msg: "You said, '{{ event.payload.message }}'. Is it me you're looking for?"
+        run_job_template:
+          name: Primary-server-frontend-backup
+          organization: Default
 
     - name: R2 - Didn't hear "Hello!"
       condition: event.payload.message is defined and event.payload.message != "Hello!"
       action:
-        debug:
-          msg: "You said, '{{ event.payload.message }}'. Is that what you meant to say?"
+        run_job_template:
+          name: Primary-server-frontend-backup
+          organization: Default
