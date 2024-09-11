@@ -1,12 +1,25 @@
-rulebook:
-  name: "API Trigger for DR-Drills"
-  description: "Triggers the DR-Drills workflow when any API call is received"
+---
+- name: Trigger DR-Drills on Webhook POST
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
 
   rules:
-    - name: "Trigger DR-Drills on API Call"
-      event:
-        source: "API"  # API call event source
-        method: "POST"  # Trigger on POST requests
-      actions:
+    - name: R1 - Trigger DR-Drills on "start-drill"
+      condition: event.payload.action == "start-drill"
+      action:
         - name: "Trigger DR-Drills Workflow"
-          workflow: "DR-Drills"
+          ansible.builtin.debug:
+            msg: "Received '{{ event.payload.action }}', triggering DR-Drills workflow."
+        - name: "Start DR-Drills Workflow"
+          ansible.builtin.shell:
+            cmd: "curl -X POST https://your-aap.com/api/v1/workflows/dr-drills/trigger"
+
+    - name: R2 - Unrecognized action
+      condition: event.payload.action is defined and event.payload.action != "start-drill"
+      action:
+        - name: "Log Invalid Action"
+          ansible.builtin.debug:
+            msg: "Received unknown action '{{ event.payload.action }}'. No workflow triggered."
