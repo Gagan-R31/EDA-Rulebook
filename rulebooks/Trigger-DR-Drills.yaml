@@ -11,8 +11,8 @@
     - name: R1 - Heard "site-up!"
       condition: event.payload.message == "site-up!"
       action:
-        run_workflow_job_template:
-          name: DR-Drills
+        run_job_template:
+          name: Primary-server-frontend-backup
           organization: Default
 
     - name: R2 - Didn't hear "site-up!"
